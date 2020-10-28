@@ -1,6 +1,5 @@
 <script>
   import { route } from "@sveltech/routify";
-  console.log("route", $route);
 </script>
 
 <h1>404: missing</h1>

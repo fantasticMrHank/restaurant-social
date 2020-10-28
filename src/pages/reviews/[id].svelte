@@ -25,17 +25,25 @@
 
 </script>
 
-<div>
-    <h3>{id} Restaurants!</h3>
+<div class="restaurant-cat-container">
+    <h3>{id} Restaurants</h3>
 
     {#each $restaurantDataStore as res, i}
-        <div in:fade="{{duration:500, delay:i*200}}">
+        <div in:fade="{{duration:500, delay:i*200}}" class="restaurant-tile">
             <SingleRes {res}/>
         </div>
     {/each}
 </div>
 
 <style>
+    .restaurant-tile{
+        text-align: left;
+    }
+    .restaurant-cat-container{
+        max-width: 960px;
+        text-align: center;
+        margin: 20px auto;
+    }
     h3{
         font-style: 24px;
         font-weight: bold;

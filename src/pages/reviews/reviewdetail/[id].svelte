@@ -47,7 +47,7 @@
 <ReviewHero {currentRestaurant} on:click={addNewReview} />
 
 {#each $reviewDataStore as review}
-    <SingleReview {review} liveLink=false />
+    <SingleReview {review} liveLink={false} />
 {/each}
 <div class:hidenModal={hideModalBool}>
     <ReviewModal on:hideModalEvent={hideModal} {currentRestaurant} />

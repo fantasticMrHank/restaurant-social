@@ -1,4 +1,5 @@
 <script>
+    import { goto } from "@sveltech/routify";
     import {firestore} from '../../firebase';
     import userStore from '../../stores/userStore';
     import memberListStore from '../../stores/memberListStore'
@@ -8,6 +9,7 @@
     import connectionManager from '../../Services/connectionManager';
     import MessageContainer from '../../components/messageContainer.svelte';
     import documentIdFinder from '../../Services/documentIdFinder';
+    import setActiveTabs from '../../utils/setActiveTabs';
 
     let currentFriend={};
     let hideModal = true;
@@ -17,6 +19,8 @@
     let hideMessage = true;
 
     $: currentMember = $userStore;
+
+    
 
     const fetchMemberData =(user)=>{
         
@@ -40,8 +44,17 @@
         }
     }
 
-	const unsubscribe = userStore.subscribe(user => {   
-        fetchMemberData(user);
+	const unsubscribe = userStore.subscribe(user => {  
+        
+        if(user.email){
+            fetchMemberData(user);
+        }else{
+            setTimeout(() => {
+                $goto('../signin');
+                setActiveTabs("path-signin");
+            }, 500);
+        }
+        
     });
     onDestroy(unsubscribe);
     

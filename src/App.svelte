@@ -2,7 +2,7 @@
 import { Router } from "@sveltech/routify";
 import { routes } from "@sveltech/routify/tmp/routes";
 import userStore from './stores/userStore';
-import {auth, firestore} from './firebase';
+import {auth} from './firebase';
 
 
     auth.onAuthStateChanged(user => {		

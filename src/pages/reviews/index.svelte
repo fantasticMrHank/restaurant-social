@@ -1,35 +1,61 @@
 <script>
-    import {auth, firestore} from '../../firebase';
-    import { goto} from '@sveltech/routify'; 
+    import {goto} from '@sveltech/routify';
     import userStore from '../../stores/userStore';
     import myReviewDataStore from '../../stores/myReviewDataStore';
     import SingleReview from '../../components/singleReview.svelte';
     import collectionManager from '../../Services/collectionManager';
+    import setActiveTabs from '../../utils/setActiveTabs';
+    import { onDestroy } from 'svelte';
 
-    auth.onAuthStateChanged(user => {		
-		if (!user) {
-            $goto('signin');
-		}
-    });
 
-    let thisUser;
-    let thisStore;
-    $: {
-        thisUser = $userStore;
-        thisStore = $myReviewDataStore;
+    // let thisUser;
+    // let thisStore;
+    // $: {
+    //     thisUser = $userStore;
+    //     thisStore = $myReviewDataStore;
 
-        if(thisUser.email){
-            if(!$myReviewDataStore.length){
+    //     if(thisUser.email){
+    //         if(!$myReviewDataStore.length){
 
-                collectionManager("reviews", "email", $userStore.email, (list)=>{
-                    myReviewDataStore.update(data =>{
-                         return list;
-                    });
+    //             collectionManager("reviews", "email", $userStore.email, (list)=>{
+    //                 myReviewDataStore.update(data =>{
+    //                      return list;
+    //                 });
+    //             });
+    //         }
+    //     }
+    //     else{
+    //         setTimeout(() => {
+    //             $goto('../signin');
+    //             setActiveTabs("path-signin");
+    //         }, 500);
+    //     }
+    // }
+
+    const getMyReviews =(user) =>{
+        if(!$myReviewDataStore.length){
+
+            collectionManager("reviews", "email", $userStore.email, (list)=>{
+                myReviewDataStore.update(data =>{
+                    return list;
                 });
-            }
+            });
         }
     }
-    
+
+    const unsubscribe = userStore.subscribe(user => {  
+        
+        if(user.email){
+            getMyReviews(user);
+        }else{
+            setTimeout(() => {
+                $goto('../../signin');
+                setActiveTabs("path-signin");
+            }, 500);
+        }
+        
+    });
+    onDestroy(unsubscribe);
     
 </script>
 

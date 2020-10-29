@@ -1,6 +1,6 @@
 <script>
 
-  import { url, goto } from "@sveltech/routify";
+  import { url } from "@sveltech/routify";
   import userStore from "./stores/userStore";
   import {auth, firestore} from './firebase';
   import { fade } from 'svelte/transition';
@@ -56,7 +56,7 @@
                     uid:""
                 }
           });
-          $goto('signin');
+          // $goto('signin');
       }
 
       if(catList.length){
@@ -92,7 +92,6 @@
 
     notificationModal.hideAll();
 
-    //grabPath();
   }
 
   const showUpdateButton =() =>{

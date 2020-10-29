@@ -7,13 +7,7 @@
     import {bounceInOut} from 'svelte/easing';
 
     let email;
-    let password;
-
-    auth.onAuthStateChanged(user => {		
-		if (user) {
-            $goto('main');
-		}
-    });
+    let password;    
     
     const signUserIn =() =>{
         auth.signInWithEmailAndPassword(email, password).then((result) => {            

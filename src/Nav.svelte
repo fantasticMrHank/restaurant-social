@@ -56,7 +56,6 @@
                     uid:""
                 }
           });
-          // $goto('signin');
       }
 
       if(catList.length){

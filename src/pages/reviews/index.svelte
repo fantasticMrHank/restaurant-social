@@ -7,31 +7,6 @@
     import setActiveTabs from '../../utils/setActiveTabs';
     import { onDestroy } from 'svelte';
 
-
-    // let thisUser;
-    // let thisStore;
-    // $: {
-    //     thisUser = $userStore;
-    //     thisStore = $myReviewDataStore;
-
-    //     if(thisUser.email){
-    //         if(!$myReviewDataStore.length){
-
-    //             collectionManager("reviews", "email", $userStore.email, (list)=>{
-    //                 myReviewDataStore.update(data =>{
-    //                      return list;
-    //                 });
-    //             });
-    //         }
-    //     }
-    //     else{
-    //         setTimeout(() => {
-    //             $goto('../signin');
-    //             setActiveTabs("path-signin");
-    //         }, 500);
-    //     }
-    // }
-
     const getMyReviews =(user) =>{
         if(!$myReviewDataStore.length){
 

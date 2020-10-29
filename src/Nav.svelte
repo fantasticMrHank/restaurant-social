@@ -11,6 +11,7 @@
   import memberListStore from "./stores/memberListStore";
   import messageListStore from "./stores/messageListStore";
   import myReviewDataStore from "./stores/myReviewDataStore";
+  import setActiveTab from './utils/setActiveTabs';
   
   let links=[];
   let catList=[];
@@ -114,20 +115,9 @@
   const grabPath = () =>{
     setTimeout(() => {
       let urlPath= window.location.pathname.substr(1);
-      setActiveTab(urlPath);
+      setActiveTab("path-"+urlPath);
     }, 100);    
   }
-
-
-  const setActiveTab =(path) =>{
-    let tabs = document.getElementsByClassName("nav-tab");
-    for(var i=0; i < tabs.length; i++){
-      tabs[i].style.color = "#000000";
-      tabs[i].style.borderBottom = "none";
-    }
-    document.getElementById("path-"+path).style.color = "#800000";
-    document.getElementById("path-"+path).style.borderBottom = "2px solid #800000";
-  } 
 
     const showAvatarModal =() =>{
       hiddenAvatarModal = false;

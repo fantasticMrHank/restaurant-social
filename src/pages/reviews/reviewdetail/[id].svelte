@@ -6,29 +6,19 @@
     import reviewDataStore from '../../../stores/reviewDataStore';
     import SingleReview from '../../../components/singleReview.svelte';
     import collectionManager from '../../../Services/collectionManager';
+    import setActiveTabs from '../../../utils/setActiveTabs';
     export let id;
     let restaurantName = id.replaceAll('*', " ");
     let currentRestaurant={}
     let hideModalBool = true;
     
-
-    const resetNavTabs =() =>{
-        let tabs = document.getElementsByClassName("nav-tab");
-        for(var i=0; i < tabs.length; i++){
-            tabs[i].style.color = "#000000";
-            tabs[i].style.borderBottom = "none";
-        }
-        document.getElementById("path-reviews/"+currentRestaurant.category).style.color = "#800000";
-        document.getElementById("path-reviews/"+currentRestaurant.category).style.borderBottom = "2px solid #800000";
-    }
-
     firestore.collection("restaurants").where("name", "==", restaurantName)
         .get()
         .then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
             currentRestaurant = doc.data();
 
-            resetNavTabs();
+            setActiveTabs("path-reviews/"+currentRestaurant.category);
         });
 
     });  

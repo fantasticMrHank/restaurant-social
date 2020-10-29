@@ -22,7 +22,10 @@
 
 
 <style>   
-    
+    img{
+        border: 1px solid #fff;
+        box-shadow: 1px 2px 3px rgba(0,0,0,0.2);
+    }
     .res-con{
         max-width: 960px;
         margin: 40px auto;

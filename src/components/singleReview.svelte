@@ -74,7 +74,7 @@
     .review-con{
         /* cursor: pointer; */
         margin-bottom: 25px;
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid #aaa;
         /* transition: 0.5s; */
     }
     .review-con:hover .restaurant-name{
@@ -88,6 +88,7 @@
         font-size: 16px;
         margin-top: -10px;      
         transition: 0.4s;
+        padding-bottom: 10px;
     }
     .restaurant-name{
         color: #800000;

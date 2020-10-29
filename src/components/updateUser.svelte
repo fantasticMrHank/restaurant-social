@@ -1,12 +1,11 @@
 <script>
-    import {auth, firestore} from '../firebase';
-    import {createEventDispatcher} from 'svelte';
+    import {auth} from '../firebase';
     import userStore from '../stores/userStore';
     import myReviewDataStore from '../stores/myReviewDataStore';
     import reviewDataStore from '../stores/reviewDataStore';
     import resetUserName from '../Services/resetUserName';
 
-    const dispatch = createEventDispatcher();
+
 
     let username="";
    
@@ -40,12 +39,10 @@
         // update author for all current reviews           
         $reviewDataStore = $reviewDataStore.map(
             review => {                    
-                if(review.email == auth.currentUser.email)
-                {
+                if(review.email == auth.currentUser.email){
                     return {...review, author: username}
                 }
-                else
-                {
+                else{
                     return {...review}
                 }
             }

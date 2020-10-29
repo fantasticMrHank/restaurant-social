@@ -28,19 +28,25 @@
 <div class="restaurant-cat-container">
     <h3>{id} Restaurants</h3>
 
+    
     {#each $restaurantDataStore as res, i}
         <div in:fade="{{duration:500, delay:i*200}}" class="restaurant-tile">
             <SingleRes {res}/>
         </div>
     {/each}
+    
 </div>
 
 <style>
+    .reviews-con{
+        max-width: 500px;
+        margin: 10ps auto;
+    }
     .restaurant-tile{
         text-align: left;
     }
     .restaurant-cat-container{
-        max-width: 960px;
+        max-width: 600px;
         text-align: center;
         margin: 20px auto;
     }

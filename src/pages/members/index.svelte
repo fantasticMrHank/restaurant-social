@@ -1,7 +1,5 @@
 <script>
-    //import firebase from 'firebase/app';
-    import {auth, firestore} from '../../firebase';
-    import { goto} from '@sveltech/routify'; 
+    import {firestore} from '../../firebase';
     import userStore from '../../stores/userStore';
     import memberListStore from '../../stores/memberListStore'
     import { onDestroy } from 'svelte';
@@ -9,6 +7,7 @@
     import ReviewList from '../../components/reviewList.svelte';
     import connectionManager from '../../Services/connectionManager';
     import MessageContainer from '../../components/messageContainer.svelte';
+    import documentIdFinder from '../../Services/documentIdFinder';
 
     let currentFriend={};
     let hideModal = true;
@@ -19,15 +18,12 @@
 
     $: currentMember = $userStore;
 
-    auth.onAuthStateChanged(user => {		
-		if (!user) {
-            $goto('signin');
-		}
-    });
-
     const fetchMemberData =(user)=>{
+        
         if(user.email){
+            
             firestore.collection("members").get().then((querySnapshot) => {
+
                 let memberList=[];
                 querySnapshot.forEach((doc) => {
                     if(doc.data().email != user.email){                
@@ -59,18 +55,12 @@
     }
 
     const sendInvite =(e) =>{
-        let currentFriendID;        
-        firestore.collection("members").where("email", "==", e.detail.email)
-            .get()
-            .then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
-                    currentFriendID = doc.id;
-            });
 
-            connectionManager("members", currentFriendID, $userStore.email, "pending", "add", ()=>{
-                alert("Connection invite has been sent!");
+        documentIdFinder("members", e.detail.email, (id) =>{
+            connectionManager("members", id, $userStore.email, "pending", "add", ()=>{
+                 alert("Connection invite has been sent!");
             });
-        });
+        })
     }
 
     const openMessageBox =(e) =>{

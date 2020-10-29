@@ -1,6 +1,6 @@
 <script>
 
-  import { url, isActive } from "@sveltech/routify";
+  import { url, goto } from "@sveltech/routify";
   import userStore from "./stores/userStore";
   import {auth, firestore} from './firebase';
   import { fade } from 'svelte/transition';
@@ -10,6 +10,7 @@
   import ConnectNotification from "./components/connectNotification.svelte";
   import memberListStore from "./stores/memberListStore";
   import messageListStore from "./stores/messageListStore";
+  import myReviewDataStore from "./stores/myReviewDataStore";
   
   let links=[];
   let catList=[];
@@ -54,6 +55,7 @@
                     uid:""
                 }
           });
+          $goto('signin');
       }
 
       if(catList.length){
@@ -85,6 +87,7 @@
     
     memberListStore.set([]);
     messageListStore.set([]);
+    myReviewDataStore.set([]);
 
     notificationModal.hideAll();
   }

@@ -4,6 +4,7 @@
     import userStore from '../../stores/userStore';
     import myReviewDataStore from '../../stores/myReviewDataStore';
     import SingleReview from '../../components/singleReview.svelte';
+    import collectionManager from '../../Services/collectionManager';
 
     auth.onAuthStateChanged(user => {		
 		if (!user) {
@@ -12,24 +13,19 @@
     });
 
     let thisUser;
-    let reviewList=[];
     let thisStore;
     $: {
         thisUser = $userStore;
         thisStore = $myReviewDataStore;
-                
+
         if(thisUser.email){
             if(!$myReviewDataStore.length){
-                firestore.collection("reviews").where("email", "==", $userStore.email)
-                    .get()
-                    .then(function(querySnapshot) {
-                        querySnapshot.forEach(function(doc) {
-                            reviewList.push(doc.data());
-                    });
+
+                collectionManager("reviews", "email", $userStore.email, (list)=>{
                     myReviewDataStore.update(data =>{
-                        return reviewList;
-                    })
-                })
+                         return list;
+                    });
+                });
             }
         }
     }
@@ -39,10 +35,10 @@
 
 <div>
     <h3 class="review-author">
-    Reviews from {$userStore.displayName || $userStore.email}
+      Reviews from {$userStore.displayName || $userStore.email}
     </h3>
     {#each $myReviewDataStore as review}
-        <SingleReview {review} showRestaurant=true />
+        <SingleReview {review} showRestaurant={true} allowDelete={true}/>
     {/each}
 </div>
 

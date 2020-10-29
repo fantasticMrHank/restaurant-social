@@ -1,26 +1,32 @@
 <script>
-    import { onMount, beforeUpdate } from 'svelte';
     import SingleRes from '../../components/singleRes.svelte';
-    import { goto } from '@sveltech/routify'; 
-    import {firestore, auth} from '../../firebase';
+    import {firestore} from '../../firebase';
     import restaurantDataStore from '../../stores/restaurantDataStore';
-    import { fade, fly } from 'svelte/transition';
+    import { fade } from 'svelte/transition';
+    import { params } from "@sveltech/routify";
+    
     export let id;
 
-    beforeUpdate(()=>{
-        firestore.collection("restaurants").get().then((querySnapshot) => {
-            let restaurantList=[];
-            querySnapshot.forEach((doc) => {
-                if(doc.data().category == id){
-                    restaurantList.push(doc.data());            
-                }            
-            });
+    let currentParam;
 
-            restaurantDataStore.update(r =>{
-                return restaurantList;
-            })
+    $: 
+    {
+        currentParam = $params;   
+
+        firestore.collection("restaurants").get().then((querySnapshot) => {
+                let restaurantList=[];
+                querySnapshot.forEach((doc) => {
+                    if(doc.data().category == id){
+                        restaurantList.push(doc.data());            
+                    }            
+                });
+
+                restaurantDataStore.update(r =>{
+                    return restaurantList;
+                })
+        
         });
-    });
+    }
     
 
 </script>
@@ -38,10 +44,6 @@
 </div>
 
 <style>
-    .reviews-con{
-        max-width: 500px;
-        margin: 10ps auto;
-    }
     .restaurant-tile{
         text-align: left;
     }

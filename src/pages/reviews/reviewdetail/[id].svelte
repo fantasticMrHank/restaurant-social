@@ -5,7 +5,7 @@
     import ReviewModal from '../../../components/reviewModal.svelte';
     import reviewDataStore from '../../../stores/reviewDataStore';
     import SingleReview from '../../../components/singleReview.svelte';
-    
+    import collectionManager from '../../../Services/collectionManager';
     export let id;
     let restaurantName = id.replaceAll('*', " ");
     let currentRestaurant={}
@@ -18,22 +18,14 @@
             currentRestaurant = doc.data();
         });
 
-    });
+    });  
 
-    let reviewList=[];
-
-    firestore.collection("reviews").where("restaurant", "==", restaurantName)
-        .get()
-        .then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
-                reviewList.push(doc.data());
-        });
+    const pupulateReviewStore = (list) =>{
         reviewDataStore.update(d =>{
-            return reviewList;
-        })
-    });
-
-
+             return list;
+         })
+    }
+    collectionManager("reviews", "restaurant", restaurantName, pupulateReviewStore);
 
     const addNewReview =()=>{
         hideModalBool = false;

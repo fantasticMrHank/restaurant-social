@@ -5,14 +5,9 @@
     import { goto } from '@sveltech/routify'; 
     import {fly} from 'svelte/transition';
     import {bounceInOut} from 'svelte/easing';
+
     let email;
     let password;
-
-    auth.onAuthStateChanged(user => {		
-		if (user) {
-            $goto('main');
-		}
-    });
     
     const registerUser =() =>{
         auth.createUserWithEmailAndPassword(email, password).then((result) => {
@@ -24,6 +19,8 @@
                     uid: result.user.uid
                 }
             });
+
+            $goto('main');
             
         }).catch(error => alert(error.message));
     }

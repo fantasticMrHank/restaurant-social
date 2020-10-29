@@ -5,6 +5,7 @@
     import messageListStore from '../stores/messageListStore';
     import compareValues from '../Services/compareValues';
     import SingleMessage from './singleMessage.svelte';
+    import collectionManager from '../Services/collectionManager';
     export let currentFriend;
     let dispatcher = createEventDispatcher();
     let message;
@@ -24,19 +25,19 @@
     export const fetchMessageList = () =>{
 
         messageList=[];
-        firestore.collection("messages").where("sender", "==", $userStore.email)
-            .get()
-            .then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
-                    if(doc.data().receiver == currentFriend.email){
-                        messageList.push(doc.data());
-                    }
-            });
 
+        collectionManager("messages", "sender", $userStore.email, (list)=>{
+           
+            for(var i in list){
+                if(list[i].receiver == currentFriend.email){
+                    messageList.push(list[i]);
+                }
+            }
             fetchMessageList2();
         });
     }
     const fetchMessageList2 = () =>{
+        
         firestore.collection("messages").where("sender", "==", currentFriend.email )
             .get()
             .then(function(querySnapshot) {

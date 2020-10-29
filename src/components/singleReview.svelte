@@ -1,9 +1,11 @@
 <script>
     import { goto } from '@sveltech/routify'; 
-
+    import {firestore} from '../firebase';
+    import myReviewDataStore from '../stores/myReviewDataStore';
     export let review;
     export let showRestaurant;
     export let liveLink = true;
+    export let allowDelete = false;
 
     const openRestaurantImage =()=>{
         window.open(review.img);
@@ -16,11 +18,17 @@
         
     }
 
+    const deleteReview =() =>{
+        firestore.collection("reviews").doc(review.id).delete().then(function() {
+            $myReviewDataStore = $myReviewDataStore.filter(item => item.id != review.id);
+        });
+    }
+
 </script>
 
-<div class="review-con" on:click={gotoRestaurantPage}>
+<div class="review-con">
     {#if showRestaurant}
-        <span class="restaurant-name">Review for {review.restaurant}</span>
+        <span class="restaurant-name" on:click={gotoRestaurantPage} >Review for {review.restaurant}</span>
     {/if}
     <div class="star-container">   
         {#each Array(parseInt(review.stars)) as _, i}     
@@ -34,15 +42,31 @@
         <img src= {review.img} alt="" class="restaurant-image" on:click={openRestaurantImage}>
     {/if}
     <p class="author-text">reviewed by: {review.author}</p>
-    {#if review.reviewDateTime}
-    <p>{review.reviewDateTime}</p>
-    {/if}
+    
+    <div>
+        {#if review.reviewDateTime}
+        <p>{review.reviewDateTime}</p>
+        {/if}
+        {#if allowDelete}
+        <div class="review-btn delete-btn" on:click={deleteReview}>Delete Review</div>
+        {/if}
+    </div>
+    
 
 
 </div>
 
 
 <style>
+    .delete-btn{
+        width: max-content;  
+        transition: 0.3s;  
+        font-weight: bold;
+        font-size: 11px;    
+    }
+    .delete-btn:hover{
+        background: #ff0000;
+    }
     .restaurant-image{
         width: 100px;
         padding-bottom: 10px;

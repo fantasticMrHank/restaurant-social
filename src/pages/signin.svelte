@@ -25,6 +25,8 @@
                     uid:result.user.uid
                 }
             });
+
+            $goto('main');
         }).catch(error => alert(error.message));
     }
 </script>

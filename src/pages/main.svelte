@@ -1,13 +1,5 @@
 <script>
-    import {auth} from '../firebase';
-    import { goto, url } from '@sveltech/routify'; 
     import {fly} from 'svelte/transition';
-
-    auth.onAuthStateChanged(user => {		
-		if (!user) {
-            $goto('signin');
-		}
-    });
 
 </script>
 

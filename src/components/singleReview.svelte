@@ -72,7 +72,7 @@
         padding-bottom: 10px;
     }
     .review-con{
-        cursor: pointer;
+        /* cursor: pointer; */
         margin-bottom: 25px;
         border-bottom: 1px solid #ddd;
         /* transition: 0.5s; */
@@ -94,6 +94,7 @@
         font-weight: bold;
         font-size: 18px;
         transition: 0.4s;
+        cursor: pointer;
     }
     .author-text{
         font-weight: bold;

@@ -12,8 +12,7 @@
    
     const updateUserName =() =>{
         auth.currentUser.updateProfile({
-            displayName: username,
-            //photoURL: "https://example.com/jane-q-user/profile.jpg"
+                displayName: username,
             }).then(function() {
                 userStore.update(u =>{
                     return {

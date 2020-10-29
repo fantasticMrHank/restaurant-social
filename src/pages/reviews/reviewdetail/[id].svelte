@@ -1,5 +1,5 @@
 <script>
-    import {firestore, auth} from '../../../firebase';
+    import {firestore} from '../../../firebase';
     
     import ReviewHero from '../../../components/reviewHero.svelte';
     import ReviewModal from '../../../components/reviewModal.svelte';
@@ -10,12 +10,25 @@
     let restaurantName = id.replaceAll('*', " ");
     let currentRestaurant={}
     let hideModalBool = true;
-    // making live database call
+    
+
+    const resetNavTabs =() =>{
+        let tabs = document.getElementsByClassName("nav-tab");
+        for(var i=0; i < tabs.length; i++){
+            tabs[i].style.color = "#000000";
+            tabs[i].style.borderBottom = "none";
+        }
+        document.getElementById("path-reviews/"+currentRestaurant.category).style.color = "#800000";
+        document.getElementById("path-reviews/"+currentRestaurant.category).style.borderBottom = "2px solid #800000";
+    }
+
     firestore.collection("restaurants").where("name", "==", restaurantName)
         .get()
         .then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
             currentRestaurant = doc.data();
+
+            resetNavTabs();
         });
 
     });  

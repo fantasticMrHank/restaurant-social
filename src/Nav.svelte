@@ -90,6 +90,8 @@
     myReviewDataStore.set([]);
 
     notificationModal.hideAll();
+
+    //grabPath();
   }
 
   const showUpdateButton =() =>{
@@ -109,13 +111,23 @@
       hiddenUpdateForm = true;
     }
 
-    const resetActiveTab = (e)=>{
-      let tabGroup = document.getElementsByClassName("nav-tab");
-      for(var i=0; i < tabGroup.length; i++){
-        tabGroup[i].style.color="#333";
-      }
-      e.target.style.color ="#800000";        
-    } 
+  const grabPath = () =>{
+    setTimeout(() => {
+      let urlPath= window.location.pathname.substr(1);
+      setActiveTab(urlPath);
+    }, 100);    
+  }
+
+
+  const setActiveTab =(path) =>{
+    let tabs = document.getElementsByClassName("nav-tab");
+    for(var i=0; i < tabs.length; i++){
+      tabs[i].style.color = "#000000";
+      tabs[i].style.borderBottom = "none";
+    }
+    document.getElementById("path-"+path).style.color = "#800000";
+    document.getElementById("path-"+path).style.borderBottom = "2px solid #800000";
+  } 
 
     const showAvatarModal =() =>{
       hiddenAvatarModal = false;
@@ -123,6 +135,23 @@
     const hideAvatarModal =() =>{
       hiddenAvatarModal = true;
     }
+
+    const checkNavReady = ()=>{
+      let path = window.location.pathname.substr(1);
+
+      if(path.indexOf("reviews/reviewdetail/") == -1){
+        
+        if(document.getElementById("path-"+path)){
+          grabPath();
+        }else{
+          setTimeout(() => {
+            checkNavReady();
+          }, 100);
+        }
+      }
+      
+    }   
+    checkNavReady();
 </script>
 
 
@@ -133,7 +162,7 @@
       <li><a href="#" on:click={logUserOut}>{name}</a></li>
     {:else}
     <!-- <li><a href={$url(path)} class:selected={$isActive(exactPath)}>{name}</a></li> -->
-      <li on:click={resetActiveTab}><a href={$url(path)} class="nav-tab">{name}</a></li>
+      <li on:click={grabPath}><a href={$url(path)} class="nav-tab" id="path-{path.substr(2)}">{name}</a></li>
     {/if}    
   {/each}
 </ul>

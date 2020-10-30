@@ -15,6 +15,7 @@
   
   let links=[];
   let catList=[];
+  let makeToolTipActive = true;
 
   let notificationModal;
 
@@ -31,7 +32,7 @@
         links = [
             ["#", "Log Out", "./LogOut"],
             ["./reviews", "Your Reviews","./Reviews"],
-            ["./members", "All Members","./members"],
+            ["./members", "Members Area","./members"],
 
           ];
         userStore.update(u =>{
@@ -42,6 +43,7 @@
                   uid: user.uid
               }
         });
+        document.getElementById("user-area").style.display="";
       }
       else{
         links = [
@@ -56,6 +58,7 @@
                     uid:""
                 }
           });
+          document.getElementById("user-area").style.display="none";
       }
 
       if(catList.length){
@@ -64,6 +67,10 @@
             return newList;
         });
       }
+
+      checkNavReady();
+      checkToolTipReady();
+
   });
 
   firestore.collection("restaurants").get().then((querySnapshot) => {
@@ -118,6 +125,7 @@
   }
 
     const showAvatarModal =() =>{
+      makeToolTipActive = false;
       hiddenAvatarModal = false;
     }
     const hideAvatarModal =() =>{
@@ -138,8 +146,28 @@
         }
       }
       
+    }
+    const  checkToolTipReady =() =>{
+      if(document.getElementById("avatar-tooltip")){
+        document.getElementById("avatar-tooltip").style.display="none";
+      }
+      else{
+        setTimeout(() => {
+          checkToolTipReady();
+        }, 100);
+      }
     }   
-    checkNavReady();
+    
+
+    const showToolTip =() =>{
+      if(makeToolTipActive){
+        document.getElementById("avatar-tooltip").style.display = "";
+      }
+    }
+    const hideToolTip =() =>{
+      document.getElementById("avatar-tooltip").style.display = "none";
+    }
+
 </script>
 
 
@@ -155,7 +183,7 @@
   {/each}
 </ul>
 <div></div>
-<div class="user-name" on:mouseover={showUpdateButton} on:mouseleave={hideUpdateButton}>
+<div class="user-name" id="user-area" on:mouseover={showUpdateButton} on:mouseleave={hideUpdateButton}>
   {#if $userStore.displayName}
         Welcome back, {$userStore.displayName}!
   {:else if $userStore.email}
@@ -176,7 +204,16 @@
   </div>
 </div>
 {#if $userStore.email}
-<div class="user-avatar" style="background-image: url({$userStore.photoURL})" tooltip="Update Avatar" on:click={showAvatarModal}/>
+<div class="user-avatar" style="background-image: url({$userStore.photoURL})" 
+                on:click={showAvatarModal} 
+                on:mouseover={showToolTip}
+                on:mouseout={hideToolTip}
+/>
+<div id="avatar-tooltip">
+  Update/upload Profile Image
+</div>  
+
+
 {/if}
 </header>
 <div class="notification-container">
@@ -188,6 +225,22 @@
 
 
 <style>
+
+  #avatar-tooltip{
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    width: max-content;
+    padding: 10px;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 11px;
+    font-weight: bold;
+    color: #800000;
+    z-index: 10;
+    box-shadow: 1px 2px 3px rgba(0,0,0,0.2);
+    border: 1px solid #ddd;
+  }
   .notification-container{
     position: absolute;
     right: 5px;
@@ -201,6 +254,7 @@
     width: 100%;
     height: 100%;
     position: absolute;
+    z-index: 100;
     top: 0px;
     left: 0px;
     background-color: rgba(0,0,0,0.5);
@@ -282,3 +336,4 @@ ul{
     color: #333;
   }
 </style>
+

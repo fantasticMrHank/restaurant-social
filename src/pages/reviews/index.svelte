@@ -1,11 +1,12 @@
 <script>
-    import {goto} from '@sveltech/routify';
     import userStore from '../../stores/userStore';
     import myReviewDataStore from '../../stores/myReviewDataStore';
     import SingleReview from '../../components/singleReview.svelte';
     import collectionManager from '../../Services/collectionManager';
     import setActiveTabs from '../../utils/setActiveTabs';
     import { onDestroy } from 'svelte';
+    import {auth} from '../../firebase';
+    import {goto} from '@sveltech/routify';
 
     const getMyReviews =(user) =>{
         if(!$myReviewDataStore.length){
@@ -18,19 +19,19 @@
         }
     }
 
-    const unsubscribe = userStore.subscribe(user => {  
-        
+    const unsubscribe = userStore.subscribe(user => {          
         if(user.email){
             getMyReviews(user);
-        }else{
-            setTimeout(() => {
-                $goto('../../signin');
-                setActiveTabs("path-signin");
-            }, 500);
-        }
-        
+        }        
     });
     onDestroy(unsubscribe);
+
+    auth.onAuthStateChanged(user => {		
+		if (!user) {
+            $goto('../../signin');
+            setActiveTabs("path-signin");
+		}
+    });
     
 </script>
 

@@ -1,6 +1,6 @@
 <script>
     import { goto } from "@sveltech/routify";
-    import {firestore} from '../../firebase';
+    import {firestore, auth} from '../../firebase';
     import userStore from '../../stores/userStore';
     import memberListStore from '../../stores/memberListStore'
     import { onDestroy } from 'svelte';
@@ -44,17 +44,10 @@
         }
     }
 
-	const unsubscribe = userStore.subscribe(user => {  
-        
+	const unsubscribe = userStore.subscribe(user => {          
         if(user.email){
             fetchMemberData(user);
-        }else{
-            setTimeout(() => {
-                $goto('../signin');
-                setActiveTabs("path-signin");
-            }, 500);
-        }
-        
+        }        
     });
     onDestroy(unsubscribe);
     
@@ -89,6 +82,13 @@
     const closeMessages =() =>{
         hideMessage = true;        
     }
+
+    auth.onAuthStateChanged(user => {		
+		if (!user) {
+            $goto('../../signin');
+            setActiveTabs("path-signin");
+		}
+    });
 </script>
 
 <div>

@@ -51,9 +51,6 @@
         <div class="review-btn delete-btn" on:click={deleteReview}>Delete Review</div>
         {/if}
     </div>
-    
-
-
 </div>
 
 

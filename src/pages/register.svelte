@@ -1,7 +1,7 @@
 <script>
     
     import userStore from "../stores/userStore";
-    import {auth} from '../firebase';
+    import {auth, firestore} from '../firebase';
     import { goto } from '@sveltech/routify'; 
     import {fly} from 'svelte/transition';
     import {bounceInOut} from 'svelte/easing';
@@ -18,6 +18,10 @@
                     photoURL:result.user.photoURL,
                     uid: result.user.uid
                 }
+            });
+
+            firestore.collection("members").doc(result.user.uid).set({
+                email: result.user.email
             });
 
             $goto('main');

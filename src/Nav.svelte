@@ -191,7 +191,7 @@
   {:else}
         <!-- doing diaplay anything -->
   {/if}
-  <div transition:fade  class="update-name-button" 
+  <div class="update-name-button" 
                         class:hiddenButton={hiddenUpdateBtnBool} 
                         on:click={showUserNameModal}>
     update User Name
@@ -313,6 +313,9 @@ ul{
   padding-top: 24px;
   font-weight: bold;
   text-align: right;
+  /* width: 200px; */
+  /* height: 100px; */
+  
 }
 
   li {

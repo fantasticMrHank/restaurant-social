@@ -42,13 +42,19 @@
                     friendsList = doc.data().friends;
             });
             
-            getConnectionStatus(friendsList);
+            if(friendsList.length){
+                getConnectionStatus(friendsList);
+            }
+            
         });
     }
         
     const fetchStatus = () => {
         let friendsList = member.friends;
-        getConnectionStatus(friendsList);        
+        if(friendsList && friendsList.length){
+            getConnectionStatus(friendsList);        
+        }
+       
     }
 
     beforeUpdate(fetchStatus);

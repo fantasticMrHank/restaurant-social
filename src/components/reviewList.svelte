@@ -2,24 +2,17 @@
     import {auth, firestore} from '../firebase';
     import OtherReviewDataStore from '../stores/OtherReviewDataStore';
     import SingleReview from './singleReview.svelte';
+    import collectionManager from '../Services/collectionManager';
 
     export let currentMember;   
 
     export const refreshData =(email)=>{
-        
-        let reviewList=[];
 
-        firestore.collection("reviews").where("email", "==", email)
-            .get()
-            .then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
-                    reviewList.push(doc.data());
-            });
-
+        collectionManager("reviews", "email", email, (list =>{
             OtherReviewDataStore.update(data =>{
-                return reviewList;
-            })
-        });
+                 return list;
+             })
+        })); 
     }
     
 </script>
@@ -30,7 +23,7 @@
         Reviews from {currentMember.name || currentMember.email}
     </h3>
         {#each $OtherReviewDataStore as review}
-            <SingleReview {review} showRestaurant=true />
+            <SingleReview {review} showRestaurant={true} />
         {/each}
     {:else}
         <h3>No Reviews from {currentMember.name || currentMember.email} yet</h3>

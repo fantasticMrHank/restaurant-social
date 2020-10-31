@@ -96,7 +96,7 @@
         <SingleMember {member}  currentUser={$userStore} 
                                 on:GetUserReview={openReviewModal} 
                                 on:SendUserInvite={sendInvite}
-                                on:SendMessage={openMessageBox}
+                                on:SendMessage={openMessageBox}                                
         />
     {/each}
 

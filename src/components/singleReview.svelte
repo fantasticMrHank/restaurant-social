@@ -6,6 +6,8 @@
     export let showRestaurant;
     export let liveLink = true;
     export let allowDelete = false;
+    import userStore from '../stores/userStore';
+    import HelpfulArea from './helpfulArea.svelte';
 
     const openRestaurantImage =()=>{
         window.open(review.img);
@@ -41,20 +43,29 @@
     {#if review.img}
         <img src= {review.img} alt="" class="restaurant-image" on:click={openRestaurantImage}>
     {/if}
-    <p class="author-text">reviewed by: {review.author}</p>
-    
+    <p class="author-text">reviewed by: {review.author}</p>    
     <div>
         {#if review.reviewDateTime}
         <p>{review.reviewDateTime}</p>
         {/if}
-        {#if allowDelete}
-        <div class="review-btn delete-btn" on:click={deleteReview}>Delete Review</div>
+
+        {#if $userStore.email == review.email}        
+            <span>3 people find it helpful</span>
         {/if}
+
+        {#if allowDelete}
+        <div class="review-btn delete-btn" on:click={deleteReview}>Delete Review</div>        
+        {/if}
+
+        {#if $userStore.email != review.email}        
+            <HelpfulArea {review} />        
+        {/if}
+
     </div>
 </div>
 
 
-<style>
+<style>    
     .delete-btn{
         width: max-content;  
         transition: 0.3s;  

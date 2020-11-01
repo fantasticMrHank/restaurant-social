@@ -1,12 +1,16 @@
 <script>
     import {fly} from 'svelte/transition';
-import MultiImageUploader from '../components/multiImageUploader.svelte';
+    import FeedFileControl from '../components/feedFileControl.svelte';
+    import MultiImageUploader from '../components/multiImageUploader.svelte';
     
+
     
 </script>
 
 <div class="main-bg" transition:fly="{{ y: 900, duration: 500 }}">
     <MultiImageUploader />
+
+    <FeedFileControl />
 </div>
 
 

@@ -2,9 +2,9 @@
   "name": "svelte-app",
   "version": "1.0.0",
   "scripts": {
-    "dev":"run-p watch:routify watch:rollup",
+    "dev": "run-p watch:routify watch:rollup",
     "build": "rollup -c",
-    "prebuild":"routify --single-build",
+    "prebuild": "routify --single-build",
     "watch:rollup": "rollup -c -w",
     "watch:routify": "routify",
     "start": "sirv public --single",
@@ -24,7 +24,9 @@
   "dependencies": {
     "@firebase/storage": "^0.3.43",
     "firebase": "^7.23.0",
+    "jszip": "^3.5.0",
     "moment": "^2.29.1",
-    "sirv-cli": "^0.4.4"
+    "sirv-cli": "^0.4.4",
+    "xlsx": "^0.16.8"
   }
 }

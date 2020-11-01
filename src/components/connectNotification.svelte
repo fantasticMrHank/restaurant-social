@@ -21,19 +21,23 @@
                 friendsList = doc.data().friends;
             })
             .then(() =>{
-                for(var i=0; i < friendsList.length; i++){
-                    if(friendsList[i].status == "pending" && requestList.indexOf(friendsList[i].friend) == -1){
-                        requestList.push(friendsList[i].friend);
-                    }
-                }
 
-                if(requestList.length){
-                    // don't hide notification
-                    hideEntireNotification = false;
+                if(friendsList && friendsList.length){
+                    for(var i=0; i < friendsList.length; i++){
+                        if(friendsList[i].status == "pending" && requestList.indexOf(friendsList[i].friend) == -1){
+                            requestList.push(friendsList[i].friend);
+                        }
+                    }
+
+                    if(requestList.length){
+                        // don't hide notification
+                        hideEntireNotification = false;
+                    }
+                    requestListStore.update(data=>{
+                        return requestList;
+                    })
                 }
-                requestListStore.update(data=>{
-                    return requestList;
-                })
+                
             })                 
         }
     }    

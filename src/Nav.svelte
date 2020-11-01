@@ -28,6 +28,9 @@
   $: userBGImage = $userStore.photoURL;
   
   auth.onAuthStateChanged(user => {		
+
+    links =[];
+    
       if (user) {
         links = [
             ["#", "Log Out", "./LogOut"],
@@ -43,6 +46,11 @@
                   uid: user.uid
               }
         });
+
+        if(user.uid == "KG7YTpw7QIQdZPxn23KbH5xTR5h2"){
+          links.push(["./feed", "Manage Users"]);
+        }
+        
         document.getElementById("user-area").style.display="";
       }
       else{
@@ -74,6 +82,7 @@
   });
 
   firestore.collection("restaurants").get().then((querySnapshot) => {
+
       let catNameList=[];
       querySnapshot.forEach((doc) => {
           if(catNameList.indexOf(doc.data().category) == -1){
@@ -81,12 +90,12 @@
             catList.push([`./reviews/${doc.data().category}`, doc.data().category, `./${doc.data().category}`]);
           }
       });
-
+      
       const newList = links.concat(catList);
       navListStore.update(l =>{
           return newList;
       });
-  });
+  });  
 
   const logUserOut =() =>{
     auth.signOut();
@@ -301,7 +310,7 @@
 .nav-header{
   width: 100%;
   display: grid;  
-  grid-template-columns: 630px 1fr 200px 65px;
+  grid-template-columns: 750px 1fr 200px 65px;
 }
 
 ul{

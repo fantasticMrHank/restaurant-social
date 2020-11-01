@@ -56,8 +56,8 @@
         {#if allowDelete}
         <div class="review-btn delete-btn" on:click={deleteReview}>Delete Review</div>        
         {/if}
-
-        {#if $userStore.email != review.email}        
+        
+        {#if $userStore.email && $userStore.email != review.email}        
             <HelpfulArea {review} />        
         {/if}
 

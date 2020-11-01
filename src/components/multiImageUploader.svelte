@@ -22,7 +22,7 @@
             imagePaths.push(singleImgPath);
 
             if(imagePaths.length == images.length){
-                console.log("got all paths again: ", imagePaths);
+                console.log("got all paths now: ", imagePaths);
             }
         })
     }

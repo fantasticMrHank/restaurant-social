@@ -5,3 +5,4 @@ A Yelp type Social Media site built with Svelte on the front-end and Firebase as
 * Registered members can connect with one another and send each other messages
 * Registered members can also upvote or downvote reviews
 * Registered members can change their user names and update/upload their profile image anytime.
+* The admin user has the ability to bulk-register users by uploading spreadsheets 

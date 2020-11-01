@@ -1,7 +1,6 @@
 <script>
     import {beforeUpdate, createEventDispatcher, onMount} from 'svelte';
     import {firestore} from '../firebase';
-    import {writable} from 'svelte/store';
 
     let dispatch = createEventDispatcher();
     export let member;

@@ -1,5 +1,4 @@
 <script>
-    import firebase from 'firebase/app';
     import {createEventDispatcher} from 'svelte';
     import userStore from '../stores/userStore';
     import {auth, firestore, storage} from '../firebase';

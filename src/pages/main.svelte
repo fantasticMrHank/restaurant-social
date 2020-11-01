@@ -1,14 +1,18 @@
 <script>
     import {fly} from 'svelte/transition';
-
+import MultiImageUploader from '../components/multiImageUploader.svelte';
+    
+    
 </script>
 
 <div class="main-bg" transition:fly="{{ y: 900, duration: 500 }}">
+    <MultiImageUploader />
 </div>
 
 
 <style>
-    .main-bg{
+    
+   .main-bg{
         opacity: 0.5;
         width: 100%;
         height: 100%;

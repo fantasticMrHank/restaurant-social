@@ -1,5 +1,9 @@
 A Yelp type Social Media site built with Svelte on the front-end and Firebase as the back-end.
 
+https://reverent-shannon-1cf88f.netlify.app/reviews
+
+you can log in as user: nancy@a.com, password: 123456
+
 * Visitors can go to each restaurant's page and see reviews from registered members
 * You can register and sign in and start reviewing restaurants
 * Registered members can connect with one another and send each other messages

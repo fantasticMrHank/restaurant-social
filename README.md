@@ -1,6 +1,6 @@
 A Yelp type Social Media site built with Svelte on the front-end and Firebase as the back-end.
 
-https://reverent-shannon-1cf88f.netlify.app/reviews
+https://reverent-shannon-1cf88f.netlify.app/
 
 you can log in as user: nancy@a.com, password: 123456
 
